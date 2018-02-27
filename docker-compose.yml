@@ -1,0 +1,22 @@
+version: '3.4'
+
+volumes:
+  ipfs_export: {}
+  ipfs_data: {}
+  
+services:
+  dnp_ipfs:
+    build: ./build
+    image: dnp_ipfs:dev
+    container_name: dnp_ipfs_dev
+    restart: always
+    volumes:
+      - ipfs_export:/export
+      - ipfs_data:/data/ipfs
+    ports:
+      - 4001:4001
+      - 4002:4002/udp
+      
+      # ONLY FOR DEVELOPMENT
+      - "127.0.0.1:5001:5001"
+      - "127.0.0.1:8080:8080"
