@@ -9,7 +9,6 @@ services:
     build: ./build
     image: dnp_ipfs:dev
     container_name: dnp_ipfs_dev
-    restart: always
     volumes:
       - ipfs_export:/export
       - ipfs_data:/data/ipfs
