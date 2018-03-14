@@ -7,7 +7,7 @@ volumes:
 services:
   dnp_ipfs:
     build: ./build
-    image: dnp_ipfs:dev
+    image: dnp_ipfs
     container_name: dnp_ipfs_dev
     volumes:
       - ipfs_export:/export
