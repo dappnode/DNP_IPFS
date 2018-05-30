@@ -1,4 +1,4 @@
-# DAppNode Package Bind (Core)
+# DAppNode Package IPFS (Core)
 
 <p align="left">
   <img src="IPFS-min.png" width="100"/>
