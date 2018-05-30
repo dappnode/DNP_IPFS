@@ -1,6 +1,19 @@
-# DNP_IPFS
+# DAppNode Package Bind (Core)
 
-Dappnode package responsible for providing IPFS connectivity 
+<p align="left">
+  <img src="IPFS-min.png" width="100"/>
+</p>
+
+[![Website dappnode.io](https://img.shields.io/badge/Website-dappnode.io-brightgreen.svg)](https://dappnode.io/)
+[![Documentation Wiki](https://img.shields.io/badge/Documentation-Wiki-brightgreen.svg)](https://github.com/dappnode/DAppNode/wiki)
+[![GIVETH Campaign](https://img.shields.io/badge/GIVETH-Campaign-1e083c.svg)](https://alpha.giveth.io/campaigns/OcKJryNwjeidMXi9)
+[![RIOT DAppNode](https://img.shields.io/badge/RIOT-DAppNode-blue.svg)](https://riot.im/app/#/room/#DAppNode:matrix.org)
+[![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.com/DAppNODE?lang=es)
+
+Dappnode package responsible for providing IPFS connectivity (go-ipfs v0.4.15)
+
+It is an AragonApp whose repo is deployed at this address: [0xb7e15019b306b9d76068742330e10cdc61bf5006](https://etherscan.io/address/0xb7e15019b306b9d76068742330e10cdc61bf5006) and whose ENS address is: [ipfs.dnp.dappnode.eth](https://etherscan.io/enslookup?q=ipfs.dnp.dappnode.eth])
+
 
 ## Getting Started
 
@@ -29,7 +42,7 @@ $ git clone https://github.com/dappnode/DNP_IPFS.git
 ```
 
 ```
-$ docker-compose build
+$ docker-compose -f docker-compose-ipfs.yml build
 or 
 $ docker build --rm -f build/Dockerfile -t dnp_ipfs:dev build 
 ```
@@ -38,28 +51,24 @@ $ docker build --rm -f build/Dockerfile -t dnp_ipfs:dev build
 
 ### Start
 ```
-$ docker-compose up -d
+$ docker-compose -f docker-compose-ipfs.yml up -d
 ```
 ### Stop
 ```
-$ docker-compose down
+$ docker-compose -f docker-compose-ipfs.yml down
 ```
 ### Status
 ```
-$ docker-compose ps
+$ docker-compose -f docker-compose-ipfs.yml ps
 ```
 ### Logs
 ```
-$ docker-compose logs -f
+$ docker-compose -f docker-compose-ipfs.yml logs -f
 ```
-
-After it starts ipfs will be accessible from 5001 and 8080 only at localhost and for development purpose. For example, the webui will be accessible from (here)[http://localhost:5001/webui]
-
-**Note**: In case of having the ports occupied, you should change them in the file docker-compose.yml by others.
 
 ### Run commands
 ```
-$ docker-compose exec dnp_ipfs ipfs ...
+$ docker-compose exec ipfs.dnp.dappnode.eth ipfs ...
 ```
 
 ## Generating a tar.xz image
@@ -67,7 +76,7 @@ $ docker-compose exec dnp_ipfs ipfs ...
 [xz](https://tukaani.org/xz/) is required 
 
 ```
-$ docker save dnp_ipfs:dev | xz -9 > dnp_ipfs_dev.tar.xz
+$ docker save dnp_ipfs:dev | xz -e9vT0 > dnp_ipfs_dev.tar.xz
 ```
 
 You can download the latest tar.xz version from here [releases](https://github.com/dappnode/DNP_IPFS/releases).
@@ -80,7 +89,7 @@ $docker load -i dnp_ipfs_dev.tar.xz
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/dappnode) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/dappnode/DAppNode/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
@@ -94,7 +103,7 @@ See also the list of [contributors](https://github.com/dappnode/DNP_IPFS/contrib
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+This project is licensed under the GPLv3 License - see the [LICENSE](LICENSE) file for details
 
 ## References
 
