@@ -12,7 +12,7 @@
 
 Dappnode package responsible for providing IPFS connectivity (go-ipfs v0.4.15)
 
-It is an AragonApp whose repo is deployed at this address: [0xb7e15019b306b9d76068742330e10cdc61bf5006](https://etherscan.io/address/0xb7e15019b306b9d76068742330e10cdc61bf5006) and whose ENS address is: [ipfs.dnp.dappnode.eth](https://etherscan.io/enslookup?q=ipfs.dnp.dappnode.eth])
+It is an AragonApp whose repo is deployed at this address: [0x9dc9dc601f8f177ab558bcabde71786f1ea84091](https://etherscan.io/address/0x9dc9dc601f8f177ab558bcabde71786f1ea84091) and whose ENS address is: [ipfs.dnp.dappnode.eth](https://etherscan.io/enslookup?q=ipfs.dnp.dappnode.eth])
 
 
 ## Getting Started
