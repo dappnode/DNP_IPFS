@@ -9,8 +9,12 @@
       "hash": "/ipfs/QmcVHo2T6qVCZHGPuVJumcDzHyyrGTRHPe3zJ55jitSt7C",
       "size": 9131772,
       "volumes": [
-        "export:/etc/bind",
+        "export:/export",
         "data:/data/ipfs"
+      ],
+      "ports": [
+        "4001:4001",
+        "4002:4002/udp"
       ],
       "restart": "always",
       "subnet": "172.33.0.0/16",
