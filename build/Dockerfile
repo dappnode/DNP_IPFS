@@ -35,7 +35,6 @@ RUN apt-get update && apt-get install -y ca-certificates
 
 # Now comes the actual target image, which aims to be as small as possible.
 FROM busybox:1-glibc
-MAINTAINER Lars Gierth <lgierth@ipfs.io>
 
 # Get the ipfs binary, entrypoint script, and TLS CAs from the build container.
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
