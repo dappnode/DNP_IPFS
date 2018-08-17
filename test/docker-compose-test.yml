@@ -1,0 +1,14 @@
+version: "3.4"
+
+services:
+  test:
+    build: ./build-test
+    image: test
+    container_name: Test
+    dns: 172.33.1.2
+    networks:
+      - dnpifps_network
+
+networks:
+  dnpifps_network:
+    external: true
