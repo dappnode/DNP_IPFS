@@ -8,8 +8,8 @@ services:
     environment:
       - IPFS_IP=172.33.1.5
     networks:
-      - dnp_ipfs_network
+      - dnpipfs_network
 
 networks:
-  dnp_ipfs_network:
+  dnpipfs_network:
     external: true
