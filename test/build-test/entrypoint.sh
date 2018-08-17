@@ -1,5 +1,8 @@
 #!/bin/sh
 
+echo "Sleeping 30s to allow IPFS daemon inizialization..."
+sleep 30
+
 # Before test
 FILE_PATH=hello.txt
 echo "DAppNodeIsAwesome" > $FILE_PATH
