@@ -1,7 +1,8 @@
 FROM alpine
 
 RUN apk update && \
-    apk add bind-tools
+    apk add curl && \
+    apk add jq
 
 COPY entrypoint.sh /
 RUN chmod +x /entrypoint.sh
