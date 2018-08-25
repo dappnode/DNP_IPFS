@@ -1,0 +1,15 @@
+version: "3.4"
+
+services:
+  test:
+    build: ./build-test
+    image: test
+    container_name: Test
+    environment:
+      - IPFS_IP=172.33.1.5
+    networks:
+      - dnpipfs_network
+
+networks:
+  dnpipfs_network:
+    external: true
