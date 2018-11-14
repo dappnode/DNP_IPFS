@@ -43,4 +43,4 @@ else
   echo "DEPRECATED: * https://github.com/ipfs/go-ipfs/pull/3685" >&2
 fi
 
-exec ipfs daemon "$@"
+exec ipfs daemon "$@" $EXTRA_OPTS
