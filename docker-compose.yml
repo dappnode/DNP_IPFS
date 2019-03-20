@@ -12,7 +12,7 @@ volumes:
 services:
     ipfs.dnp.dappnode.eth:
         build: ./build
-        image: 'ipfs.dnp.dappnode.eth:0.1.4'
+        image: 'ipfs.dnp.dappnode.eth:0.1.5'
         container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
         restart: always
         volumes:
@@ -29,5 +29,5 @@ services:
                 ipv4_address: 172.33.1.5
         logging:
             options:
-                max-size: "10m"
-                max-file: "3"
+                max-size: 10m
+                max-file: '3'
