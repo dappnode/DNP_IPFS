@@ -1,19 +1,24 @@
 {
   "name": "ipfs.dnp.dappnode.eth",
   "version": "0.1.5",
-  "description": "Dappnode package responsible for providing IPFS connectivity (go-ipfs v0.4.18)",
+  "description": "Dappnode package responsible for providing IPFS connectivity (go-ipfs v0.4.19)",
   "avatar": "/ipfs/QmViXy8BVb8dQ7J9jLK626kcB5Tz2pvvKE43KHo8RNDXxL",
   "type": "dncore",
   "image": {
-    "path": "",
-    "hash": "",
-    "size": "",
+    "path": "ipfs.dnp.dappnode.eth_0.1.5.tar.xz",
+    "hash": "/ipfs/QmPbeECpvW7c2CtPCZA4zAdR2rZRyJTmGvHnxJATyppXVQ",
+    "size": 11844958,
     "volumes": [
       "ipfsdnpdappnodeeth_export:/export",
       "ipfsdnpdappnodeeth_data:/data/ipfs"
     ],
-    "ports": ["4001:4001", "4002:4002/udp"],
-    "environment": ["EXTRA_OPTS"],
+    "ports": [
+      "4001:4001",
+      "4002:4002/udp"
+    ],
+    "environment": [
+      "EXTRA_OPTS"
+    ],
     "restart": "always",
     "subnet": "172.33.0.0/16",
     "ipv4_address": "172.33.1.5"
@@ -22,7 +27,10 @@
   "contributors": [
     "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"
   ],
-  "keywords": ["DAppNodeCore", "IPFS"],
+  "keywords": [
+    "DAppNodeCore",
+    "IPFS"
+  ],
   "homepage": {
     "adminui": "http://my.ipfs.dnp.dappnode.eth:5001/webui",
     "homepage": "https://github.com/dappnode/DNP_IPFS#readme"
