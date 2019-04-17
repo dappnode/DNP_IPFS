@@ -1,13 +1,13 @@
 {
   "name": "ipfs.dnp.dappnode.eth",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Dappnode package responsible for providing IPFS connectivity (go-ipfs v0.4.19)",
   "avatar": "/ipfs/QmViXy8BVb8dQ7J9jLK626kcB5Tz2pvvKE43KHo8RNDXxL",
   "type": "dncore",
   "image": {
-    "path": "ipfs.dnp.dappnode.eth_0.1.5.tar.xz",
-    "hash": "/ipfs/QmPbeECpvW7c2CtPCZA4zAdR2rZRyJTmGvHnxJATyppXVQ",
-    "size": 11844958,
+    "path": "",
+    "hash": "",
+    "size": "",
     "volumes": [
       "ipfsdnpdappnodeeth_export:/export",
       "ipfsdnpdappnodeeth_data:/data/ipfs"
