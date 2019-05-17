@@ -3,6 +3,8 @@ set -e
 user=ipfs
 repo="$IPFS_PATH"
 
+ROUTING=${ROUTING:-"dht"}
+
 if [ `id -u` -eq 0 ]; then
   echo "Changing user to $user"
   # ensure folder is writable
@@ -44,4 +46,4 @@ else
   echo "DEPRECATED: * https://github.com/ipfs/go-ipfs/pull/3685" >&2
 fi
 
-exec ipfs daemon "$@" $EXTRA_OPTS
+exec ipfs daemon --routing=$ROUTING "$@" $EXTRA_OPTS
