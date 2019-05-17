@@ -23,6 +23,7 @@ else
   ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
   ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
   ipfs config --json Datastore.StorageMax '"50GB"'
+  ipfs bootstrap add /ip4/68.183.116.121/tcp/4001/ipfs/QmaBnrmDpbf6sZjTY8c3BUzZ8BXmmmRtpZJRVtHtgS7oMK
 fi
 
 # if the first argument is daemon
