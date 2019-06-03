@@ -1,7 +1,7 @@
 {
   "name": "ipfs.dnp.dappnode.eth",
   "version": "0.2.2",
-  "description": "Dappnode package responsible for providing IPFS connectivity (go-ipfs v0.4.20)",
+  "description": "Dappnode package responsible for providing IPFS connectivity (go-ipfs v0.4.21)",
   "avatar": "/ipfs/QmViXy8BVb8dQ7J9jLK626kcB5Tz2pvvKE43KHo8RNDXxL",
   "type": "dncore",
   "image": {
@@ -18,7 +18,7 @@
     ],
     "environment": [
       "EXTRA_OPTS=",
-      "ROUTING=dhtclient"
+      "ROUTING="
     ],
     "restart": "always",
     "subnet": "172.33.0.0/16",
