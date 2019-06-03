@@ -3,7 +3,7 @@ FROM golang:1.12-stretch
 ENV GX_IPFS ""
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 
-ENV BRANCH v0.4.20
+ENV BRANCH v0.4.21
 
 RUN apt-get update && apt-get install -y git
 RUN git clone --branch $BRANCH https://github.com/ipfs/go-ipfs.git $SRC_DIR
