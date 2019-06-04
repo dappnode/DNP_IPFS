@@ -8,3 +8,4 @@
 docker-compose -f docker-compose.yml up -d
 docker-compose -f test/docker-compose-test.yml build
 docker-compose -f test/docker-compose-test.yml run test
+docker-compose -f test/docker-compose-test.yml down
