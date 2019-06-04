@@ -12,7 +12,7 @@ volumes:
 services:
     ipfs.dnp.dappnode.eth:
         build: ./build
-        image: 'ipfs.dnp.dappnode.eth:0.2.2'
+        image: 'ipfs.dnp.dappnode.eth:0.2.3'
         container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
         restart: always
         volumes:
