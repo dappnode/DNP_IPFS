@@ -18,7 +18,7 @@
     ],
     "environment": [
       "EXTRA_OPTS=",
-      "ROUTING="
+      "ROUTING=dhtclient"
     ],
     "restart": "always",
     "subnet": "172.33.0.0/16",
