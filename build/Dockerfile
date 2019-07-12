@@ -1,19 +1,25 @@
 FROM golang:1.12-stretch
 
-ENV GX_IPFS ""
-ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
+ENV SRC_DIR /go-ipfs
+ENV TMP_DIR /tmp/go-ipfs
 
-ENV BRANCH v0.4.21
+ENV BRANCH v0.4.22-rc1
 
 RUN apt-get update && apt-get install -y git
-RUN git clone --branch $BRANCH https://github.com/ipfs/go-ipfs.git $SRC_DIR
+RUN git clone --branch $BRANCH https://github.com/ipfs/go-ipfs.git $TMP_DIR
+
+# Pre download so we can cache the dependencies
+RUN mkdir -p $SRC_DIR \
+  && cd $SRC_DIR \
+  && cp $TMP_DIR/go.* . \
+  && go mod download
 
 # Build the thing.
 # Also: fix getting HEAD commit hash via git rev-parse.
 # Also: allow using a custom IPFS API endpoint.
 RUN cd $SRC_DIR \
+  && mv $TMP_DIR/* . \
   && mkdir -p .git/objects \
-  && ([ -z "$GX_IPFS" ] || echo $GX_IPFS > /root/.ipfs/api) \
   && make build
 
 # Get su-exec, a very minimal tool for dropping privileges,
@@ -37,7 +43,7 @@ RUN apt-get update && apt-get install -y ca-certificates
 FROM busybox:1-glibc
 
 # Get the ipfs binary, entrypoint script, and TLS CAs from the build container.
-ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
+ENV SRC_DIR /go-ipfs
 COPY --from=0 $SRC_DIR/cmd/ipfs/ipfs /usr/local/bin/ipfs
 COPY --from=0 $SRC_DIR/bin/container_daemon /usr/local/bin/start_ipfs
 COPY --from=0 /tmp/su-exec/su-exec /sbin/su-exec
