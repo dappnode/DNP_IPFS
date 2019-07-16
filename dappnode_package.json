@@ -5,9 +5,9 @@
   "avatar": "/ipfs/QmViXy8BVb8dQ7J9jLK626kcB5Tz2pvvKE43KHo8RNDXxL",
   "type": "dncore",
   "image": {
-    "path": "",
-    "hash": "",
-    "size": "",
+    "path": "ipfs.dnp.dappnode.eth_0.2.3.tar.xz",
+    "hash": "/ipfs/QmNaCnCF4GkzJEs85Va2ktCqt9Vps6iJ7rc7TnE2DR17Rw",
+    "size": 18392120,
     "volumes": [
       "ipfsdnpdappnodeeth_export:/export",
       "ipfsdnpdappnodeeth_data:/data/ipfs"
