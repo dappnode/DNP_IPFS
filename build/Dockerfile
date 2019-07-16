@@ -1,20 +1,28 @@
-FROM golang:1.12-stretch
+FROM golang:1.12.5-stretch
 
-ENV GX_IPFS ""
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 
-ENV BRANCH v0.4.21
+ENV TAG v0.4.21
 
-RUN apt-get update && apt-get install -y git
-RUN git clone --branch $BRANCH https://github.com/ipfs/go-ipfs.git $SRC_DIR
+RUN apt-get update && apt-get install -y wget ca-certificates
+#RUN git clone --branch $BRANCH https://github.com/ipfs/go-ipfs.git $SRC_DIR
+
+#COPY go.mod $SRC_DIR
+#COPY go.sum $SRC_DIR
 
 # Build the thing.
 # Also: fix getting HEAD commit hash via git rev-parse.
 # Also: allow using a custom IPFS API endpoint.
-RUN cd $SRC_DIR \
-  && mkdir -p .git/objects \
-  && ([ -z "$GX_IPFS" ] || echo $GX_IPFS > /root/.ipfs/api) \
-  && make build
+#RUN cd $SRC_DIR \
+#  && mkdir -p .git/objects \
+#  && go get -v ./cmd/... \
+#  && GOPROXY='https://proxy.golang.org' make build
+
+
+RUN mkdir -p /go/src/github.com/ipfs/go-ipfs && wget https://github.com/ipfs/go-ipfs/releases/download/${TAG}/go-ipfs_${TAG}_linux-amd64.tar.gz -O $SRC_DIR/go-ipfs_${TAG}_linux-amd64.tar.gz 
+RUN cd $SRC_DIR && \
+    tar -xzvf go-ipfs_${TAG}_linux-amd64.tar.gz
+
 
 # Get su-exec, a very minimal tool for dropping privileges,
 # and tini, a very minimal init daemon for containers
@@ -30,16 +38,12 @@ RUN set -x \
   && wget -q -O tini https://github.com/krallin/tini/releases/download/$TINI_VERSION/tini \
   && chmod +x tini
 
-# Get the TLS CA certificates, they're not provided by busybox.
-RUN apt-get update && apt-get install -y ca-certificates
-
 # Now comes the actual target image, which aims to be as small as possible.
 FROM busybox:1-glibc
 
 # Get the ipfs binary, entrypoint script, and TLS CAs from the build container.
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
-COPY --from=0 $SRC_DIR/cmd/ipfs/ipfs /usr/local/bin/ipfs
-COPY --from=0 $SRC_DIR/bin/container_daemon /usr/local/bin/start_ipfs
+COPY --from=0 $SRC_DIR/go-ipfs/ipfs /usr/local/bin/ipfs
 COPY --from=0 /tmp/su-exec/su-exec /sbin/su-exec
 COPY --from=0 /tmp/tini /sbin/tini
 COPY --from=0 /etc/ssl/certs /etc/ssl/certs
