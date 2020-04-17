@@ -20,8 +20,9 @@ services:
     ports:
       - '4001:4001'
       - '4002:4002/udp'
-    env_file:
-      - ipfs.dnp.dappnode.eth.env
+    environment:
+      - EXTRA_OPTS
+      - ROUTING
     dns: 172.33.1.2
     networks:
       network:

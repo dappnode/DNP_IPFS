@@ -1,30 +1,9 @@
 {
   "name": "ipfs.dnp.dappnode.eth",
   "version": "0.2.5",
-  "upstreamVersion": "v0.4.22",
+  "upstreamVersion": "v0.4.23",
   "description": "Dappnode package responsible for providing IPFS connectivity",
-  "avatar": "/ipfs/QmViXy8BVb8dQ7J9jLK626kcB5Tz2pvvKE43KHo8RNDXxL",
   "type": "dncore",
-  "image": {
-    "path": "",
-    "hash": "",
-    "size": "",
-    "volumes": [
-      "ipfsdnpdappnodeeth_export:/export",
-      "ipfsdnpdappnodeeth_data:/data/ipfs"
-    ],
-    "ports": [
-      "4001:4001",
-      "4002:4002/udp"
-    ],
-    "environment": [
-      "EXTRA_OPTS=",
-      "ROUTING=dhtclient"
-    ],
-    "restart": "always",
-    "subnet": "172.33.0.0/16",
-    "ipv4_address": "172.33.1.5"
-  },
   "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
   "contributors": [
     "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"
