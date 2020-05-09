@@ -2,7 +2,7 @@ FROM golang:1.12.5-stretch
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 
-ENV TAG v0.5.0
+ENV TAG v0.5.1
 
 RUN apt-get update && apt-get install -y wget ca-certificates
 #RUN git clone --branch $BRANCH https://github.com/ipfs/go-ipfs.git $SRC_DIR
