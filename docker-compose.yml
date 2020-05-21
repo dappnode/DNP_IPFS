@@ -22,7 +22,7 @@ services:
       - '4002:4002/udp'
     environment:
       - EXTRA_OPTS
-      - ROUTING
+      - ROUTING=dhtclient
     dns: 172.33.1.2
     networks:
       network:
