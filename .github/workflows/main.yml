@@ -1,0 +1,44 @@
+name: "Main"
+on:
+  pull_request:
+    paths:
+      - "build/**"
+  push:
+    branches:
+      - "master"
+      - "v[0-9]+.[0-9]+.[0-9]+"
+    paths:
+      - "build/**"
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-16.04
+    name: Integration tests
+    steps:
+      - uses: actions/checkout@v2
+      - run: ./test/test.sh
+
+  build-test:
+    runs-on: ubuntu-16.04
+    name: Build test
+    if: github.event_name != 'push'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - run: docker-compose build
+
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    needs: [integration-test]
+    if: github.event_name == 'push'
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "10.x"
+      - name: Publish
+        run: npx @dappnode/dappnodesdk publish patch --dappnode_team_preset
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
