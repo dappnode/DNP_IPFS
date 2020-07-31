@@ -2,7 +2,7 @@ FROM golang:1.14.2-buster
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 
-ENV TAG v0.5.1
+ENV TAG v0.6.0
 
 # Install deps
 RUN apt-get update && apt-get install -y \
