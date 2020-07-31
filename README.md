@@ -6,7 +6,7 @@
 [![ELEMENT DAppNode](https://img.shields.io/badge/ELEMENT-DAppNode-blue.svg)](https://app.element.io/#/room/#DAppNode:matrix.org)
 [![Twitter Follow](https://img.shields.io/twitter/follow/espadrine.svg?style=social&label=Follow)](https://twitter.dappnode.io)
 
-Dappnode package responsible for providing IPFS connectivity (go-ipfs v0.4.15)
+Dappnode package responsible for providing IPFS connectivity
 
 It is an AragonApp whose repo is deployed at this address: [0x9dc9dc601f8f177ab558bcabde71786f1ea84091](https://etherscan.io/address/0x9dc9dc601f8f177ab558bcabde71786f1ea84091) and whose ENS address is: [ipfs.dnp.dappnode.eth](https://etherscan.io/enslookup?q=ipfs.dnp.dappnode.eth])
 
