@@ -4,6 +4,7 @@
   "upstreamVersion": "v0.6.0",
   "description": "Dappnode package responsible for providing IPFS connectivity",
   "type": "dncore",
+  "architectures": ["amd64", "arm64"],
   "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
   "contributors": [
     "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"
