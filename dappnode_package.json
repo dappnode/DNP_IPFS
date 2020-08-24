@@ -1,6 +1,6 @@
 {
   "name": "ipfs.dnp.dappnode.eth",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "upstreamVersion": "v0.6.0",
   "description": "Dappnode package responsible for providing IPFS connectivity",
   "type": "dncore",
@@ -8,10 +8,7 @@
   "contributors": [
     "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"
   ],
-  "keywords": [
-    "DAppNodeCore",
-    "IPFS"
-  ],
+  "keywords": ["DAppNodeCore", "IPFS"],
   "links": {
     "webui": "http://ipfs.dappnode:5001/webui",
     "homepage": "https://github.com/dappnode/DNP_IPFS#readme"
