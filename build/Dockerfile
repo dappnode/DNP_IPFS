@@ -2,7 +2,7 @@ FROM golang:1.14.2-buster
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 
-ENV TAG v0.6.0
+ARG UPSTREAM_VERSION
 
 # Install deps
 RUN apt-get update && apt-get install -y \
@@ -17,8 +17,8 @@ RUN set -eux; \
   esac; \
   mkdir -p ${SRC_DIR} \
   && cd $SRC_DIR \
-  && wget https://github.com/ipfs/go-ipfs/releases/download/${TAG}/go-ipfs_${TAG}_linux-${dpkgArch}.tar.gz -O $SRC_DIR/go-ipfs_${TAG}_linux-${dpkgArch}.tar.gz \
-  && tar -xzvf go-ipfs_${TAG}_linux-${dpkgArch}.tar.gz
+  && wget https://github.com/ipfs/go-ipfs/releases/download/${UPSTREAM_VERSION}/go-ipfs_${UPSTREAM_VERSION}_linux-${dpkgArch}.tar.gz -O $SRC_DIR/go-ipfs_${UPSTREAM_VERSION}_linux-${dpkgArch}.tar.gz \
+  && tar -xzvf go-ipfs_${UPSTREAM_VERSION}_linux-${dpkgArch}.tar.gz
 
 # Get su-exec, a very minimal tool for dropping privileges,
 # and tini, a very minimal init daemon for containers
