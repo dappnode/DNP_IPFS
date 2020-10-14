@@ -1,4 +1,4 @@
-version: "3.4"
+version: '3.4'
 networks:
   network:
     driver: bridge
@@ -14,15 +14,15 @@ services:
       context: ./build
       args:
         UPSTREAM_VERSION: v0.7.0
-    image: 'ipfs.dnp.dappnode.eth:0.2.10'
+    image: 'ipfs.dnp.dappnode.eth:0.2.12'
     container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
     restart: always
     volumes:
-      - "ipfsdnpdappnodeeth_export:/export"
-      - "ipfsdnpdappnodeeth_data:/data/ipfs"
+      - 'ipfsdnpdappnodeeth_export:/export'
+      - 'ipfsdnpdappnodeeth_data:/data/ipfs'
     ports:
-      - "4001:4001"
-      - "4002:4002/udp"
+      - '4001:4001'
+      - '4002:4002/udp'
     environment:
       - EXTRA_OPTS
       - ROUTING=dhtclient
