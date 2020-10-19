@@ -9,6 +9,8 @@
   "contributors": [
     "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"
   ],
+  "upstreamRepo": "ipfs/go-ipfs",
+  "upstreamArg": "UPSTREAM_VERSION",
   "keywords": ["DAppNodeCore", "IPFS"],
   "links": {
     "webui": "http://ipfs.dappnode:5001/webui",
