@@ -27,6 +27,8 @@ else
     ipfs config --json Datastore.StorageMax '"50GB"'
 fi
 
+ipfs config Routing.Type ${ROUTING}
+
 # if the first argument is daemon
 if [ "$1" = "daemon" ]; then
     # filter the first argument until
@@ -45,4 +47,4 @@ else
     echo "DEPRECATED: * https://github.com/ipfs/go-ipfs/pull/3685" >&2
 fi
 
-exec ipfs daemon --routing=$ROUTING "$@" $EXTRA_OPTS
+exec ipfs daemon --routing $ROUTING "$@" $EXTRA_OPTS
