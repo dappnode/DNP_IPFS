@@ -16,7 +16,7 @@ services:
         UPSTREAM_VERSION: v0.7.0
     image: "ipfs.dnp.dappnode.eth:0.2.11"
     container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
-    restart: always
+    restart: unless-stopped
     volumes:
       - "ipfsdnpdappnodeeth_export:/export"
       - "ipfsdnpdappnodeeth_data:/data/ipfs"
