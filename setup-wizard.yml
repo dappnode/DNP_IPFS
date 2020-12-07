@@ -46,6 +46,9 @@ fields:
     title: Max Storage
     description: >-
       A soft upper limit for the size of the ipfs repository's datastore.
+
+
+      Default: 50GB
     require: true
 
   - id: routing
@@ -57,7 +60,7 @@ fields:
       There are two core routing options: "none" and "dht".
 
 
-      - **dht**: Your node will use the IPFS DHT.
+      - **dht** (default): Your node will use the IPFS DHT.
         When the DHT is enabled, it can operate in two modes: client and server.
         When routing type is set to dht, your node will start as a DHT client,
         and switch to a DHT server when and if it determines that it's reachable
@@ -70,7 +73,7 @@ fields:
           DHT records, and will respond to requests from other peers
           (both requests to store records and requests to retrieve records).
 
-        - **dhtclient**: In client mode, your node will query the DHT as a client
+        - **dhtclient** (default): In client mode, your node will query the DHT as a client
           but will not respond to requests from other peers. This mode is less 
           resource intensive than server mode.
 
@@ -92,6 +95,9 @@ fields:
     title: Discovery MDNS Enabled
     description: >-
       A boolean value for whether or not mdns should be active.
+
+
+      Default: true
     require: true
     enum:
       - "true"
@@ -109,6 +115,8 @@ fields:
       When this works (i.e., when your router supports NAT port forwarding), 
       it makes the local go-ipfs node accessible from the public internet.
 
+
+      Default: false
     require: true
     enum:
       - "false"
@@ -130,6 +138,8 @@ fields:
       to have this disabled and keep the network aware of what you have, you must manually
       announce your content periodically.
 
+
+      Default: 12h
     require: true
     if: { "profile": { "enum": ["custom"] } }
 
@@ -140,6 +150,9 @@ fields:
     title: LowWater
     description: >-
       LowWater is the number of connections that the basic connection manager will trim down to.
+
+
+      Default: 600
     require: true
     if: { "profile": { "enum": ["custom"] } }
 
@@ -151,6 +164,9 @@ fields:
     description: >-
       HighWater is the number of connections that, when exceeded, will trigger a connection
       GC operation. Note: protected/recently formed connections don't count towards this limit.
+
+
+      Default: 900
     require: true
     if: { "profile": { "enum": ["custom"] } }
 
@@ -162,5 +178,8 @@ fields:
     description: >-
       GracePeriod is a time duration that new connections are immune from being closed
       by the connection manager.
+
+
+      Default: 20s
     require: true
     if: { "profile": { "enum": ["custom"] } }
