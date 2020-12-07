@@ -25,10 +25,16 @@ services:
       - "4002:4002/udp"
     environment:
       - EXTRA_OPTS
+      - DATASTORE_STORAGEMAX=50GB
+      - PROFILE=custom
       - ROUTING=dhtclient
+      - DISCOVERY_MDNS_ENABLED=true
+      - SWARM_DISABLENATPORTMAP=false
+      - REPROVIDER_INTERVAL=12h
+      - SWARM_CONNMGR_LOWWATER=600
+      - SWARM_CONNMGR_HIGHWATER=900
+      - SWARM_CONNMGR_GRACEPERIOD=20s
     dns: 172.33.1.2
     networks:
       network:
         ipv4_address: 172.33.1.5
-    logging:
-      driver: journald
