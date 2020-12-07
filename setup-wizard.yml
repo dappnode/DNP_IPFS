@@ -1,0 +1,162 @@
+version: "2"
+fields:
+  - id: profile
+    target:
+      type: environment
+      name: PROFILE
+    title: IPFS profile mode
+    description: >-
+      - `default-networking`
+          Restores default network settings.
+      - `lowpower`
+          Reduces daemon overhead on the system. May affect node
+          functionality - performance of content discovery and data
+          fetching may be degraded.
+      - `local-discovery`
+          Sets default values to fields affected by the server
+          profile, enables discovery in local networks.
+      - `server`
+          Disables local host discovery, recommended when
+          running IPFS on machines with public IPv4 addresses.
+      - `none`
+          Your node will use no routing system. You'll have to explicitly 
+          connect to peers that have the content you're looking for.
+          We recommend at least to [add](http://my.dappnode/#/system/add-ipfs-peer/%2Fdns4%2Fipfs.dappnode.io%2Ftcp%2F4001%2Fipfs%2FQmfB6dT5zxUq1BXiXisgcZKYkvjywdDYBK5keRaqDKH633) 
+          DAppNoder IPFS peer if you don't want to have problems getting DAppNode packages.
+      - `custom`
+          Allows you to fine-tuning several parameters
+    enum:
+      - "default-networking"
+      - "lowpower"
+      - "local-discovery"
+      - "server"
+      - "none"
+      - "custom"
+    required: true
+
+  - id: datastore_storagemax
+    target:
+      type: environment
+      name: DATASTORE_STORAGEMAX
+    title: Max Storage
+    description: >-
+      A soft upper limit for the size of the ipfs repository's datastore. Default: "10GB"
+    require: true
+
+  - id: routing
+    target:
+      type: environment
+      name: ROUTING
+    title: Content routing mode
+    description: >-
+      There are two core routing options: "none" and "dht".
+
+
+      If set to "none", your node will use no routing system. You'll have to explicitly connect to peers that have the content you're looking for.
+      If set to "dht" (or "dhtclient"/"dhtserver"), your node will use the IPFS DHT.
+      When the DHT is enabled, it can operate in two modes: client and server.
+
+
+      In server mode, your node will query other peers for DHT records, and will respond to requests from other peers (both requests to store records and requests to retrieve records).
+      In client mode, your node will query the DHT as a client but will not respond to requests from other peers. This mode is less resource intensive than server mode.
+      When Routing.Type is set to dht, your node will start as a DHT client, and switch to a DHT server when and if it determines that it's reachable from the public internet (e.g., it's not behind a firewall).
+
+
+      To force a specific DHT mode, client or server, set Routing.Type to dhtclient or dhtserver respectively. Please do not set this to dhtserver unless you're sure your node is reachable from the public network.
+
+
+      Default: "dhtclient"
+    require: true
+    enum:
+      - "dht"
+      - "dhtclient"
+      - "dhtserver"
+      - "none"
+    if: { "profile": { "enum": ["custom"] } }
+
+  - id: discovery_mdns_enabled
+    target:
+      type: environment
+      name: DISCOVERY_MDNS_ENABLED
+    title: Discovery MDNS Enabled
+    description: >-
+      A boolean value for whether or not mdns should be active.
+
+
+      Default: true
+    require: true
+    enum:
+      - "true"
+      - "false"
+    if: { "profile": { "enum": ["custom"] } }
+
+  - id: swarm_disablenatportmap
+    target:
+      type: environment
+      name: SWARM_DISABLENATPORTMAP
+    title: Disable automatic NAT port forwarding
+    description: >-
+      When not disabled (default), go-ipfs asks NAT devices (e.g., routers), to open up an external port and forward it to the port go-ipfs is running on. When this works (i.e., when your router supports NAT port forwarding), it makes the local go-ipfs node accessible from the public internet.
+
+
+      Default: false
+    require: true
+    enum:
+      - "false"
+      - "true"
+    if: { "profile": { "enum": ["custom"] } }
+
+  - id: reprovider_interval
+    target:
+      type: environment
+      name: REPROVIDER_INTERVAL
+    title: Reprovider strategy
+    description: >-
+      Sets the time between rounds of reproviding local content to the routing system. If unset, it defaults to 12 hours. If set to the value "0" it will disable content reproviding.
+
+
+      Note: disabling content reproviding will result in other nodes on the network not being able to discover that you have the objects that you have. If you want to have this disabled and keep the network aware of what you have, you must manually announce your content periodically.
+    
+
+      Default: 12h
+    require: true
+    if: { "profile": { "enum": ["custom"] } }
+
+  - id: swarm_connmgr_lowwater
+    target:
+      type: environment
+      name: SWARM_CONNMGR_LOWWATER
+    title: LowWater
+    description: >-
+      LowWater is the number of connections that the basic connection manager will trim down to.
+
+
+      Default: 600
+    require: true
+    if: { "profile": { "enum": ["custom"] } }
+
+  - id: swarm_connmgr_highwater
+    target:
+      type: environment
+      name: SWARM_CONNMGR_HIGHWATER
+    title: HighWater
+    description: >-
+      HighWater is the number of connections that, when exceeded, will trigger a connection GC operation. Note: protected/recently formed connections don't count towards this limit.
+
+
+      Default: 900
+    require: true
+    if: { "profile": { "enum": ["custom"] } }
+
+  - id: swarm_connmgr_graceperiod
+    target:
+      type: environment
+      name: SWARM_CONNMGR_GRACEPERIOD
+    title: GracePeriod
+    description: >-
+      GracePeriod is a time duration that new connections are immune from being closed by the connection manager.
+
+
+      Default: "20s"
+    require: true
+    if: { "profile": { "enum": ["custom"] } }

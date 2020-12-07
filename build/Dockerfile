@@ -1,4 +1,4 @@
-FROM golang:1.14.2-buster
+FROM golang:1.15-buster
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 

@@ -3,8 +3,6 @@ set -e
 user=ipfs
 repo="$IPFS_PATH"
 
-ROUTING=${ROUTING:-"dht"}
-
 # if [ `id -u` -eq 0 ]; then
 #     echo "Changing user to $user"
 #     # ensure folder is writable
@@ -24,10 +22,24 @@ else
     ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
     ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
     ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
-    ipfs config --json Datastore.StorageMax '"50GB"'
 fi
 
-ipfs config Routing.Type ${ROUTING}
+
+if [ "$PROFILE" != "custom" ] && [ "$PROFILE" != "none" ]; then
+    ipfs config profile apply $PROFILE
+elif [ "$PROFILE" == "none" ]; then
+    ipfs config Routing.Type none
+else
+    ipfs config Routing.Type "${ROUTING}"
+    ipfs config --json Discovery.MDNS.Enabled ${DISCOVERY_MDNS_ENABLED}
+    ipfs config --json Swarm.DisableNatPortMap ${SWARM_DISABLENATPORTMAP}
+    ipfs config --json Reprovider.Interval "\"${REPROVIDER_INTERVAL}\""
+    ipfs config --json Swarm.ConnMgr.LowWater "${SWARM_CONNMGR_LOWWATER}"
+    ipfs config --json Swarm.ConnMgr.HighWater "${SWARM_CONNMGR_HIGHWATER}"
+    ipfs config --json Swarm.ConnMgr.GracePeriod "\"${SWARM_CONNMGR_GRACEPERIOD}\""
+fi
+
+ipfs config --json Datastore.StorageMax "\"$DATASTORE_STORAGEMAX\""
 
 # if the first argument is daemon
 if [ "$1" = "daemon" ]; then
@@ -47,4 +59,4 @@ else
     echo "DEPRECATED: * https://github.com/ipfs/go-ipfs/pull/3685" >&2
 fi
 
-exec ipfs daemon --routing $ROUTING "$@" $EXTRA_OPTS
+exec ipfs daemon "$@" $EXTRA_OPTS
