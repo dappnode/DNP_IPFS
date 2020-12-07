@@ -1,6 +1,6 @@
 {
   "name": "ipfs.dnp.dappnode.eth",
-  "version": "0.2.11",
+  "version": "0.2.14",
   "upstreamVersion": "v0.6.0",
   "description": "Dappnode package responsible for providing IPFS connectivity",
   "type": "dncore",
