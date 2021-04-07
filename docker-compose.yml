@@ -1,10 +1,8 @@
-version: "3.4"
+version: "3.5"
 networks:
-  network:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.33.0.0/16
+  dncore_network:
+    name: dncore_network
+    external: true
 volumes:
   ipfsdnpdappnodeeth_export: {}
   ipfsdnpdappnodeeth_data: {}
@@ -36,5 +34,7 @@ services:
       - SWARM_CONNMGR_GRACEPERIOD=20s
     dns: 172.33.1.2
     networks:
-      network:
+      dncore_network:
         ipv4_address: 172.33.1.5
+        aliases:
+          - ipfs.dappnode
