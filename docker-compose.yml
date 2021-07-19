@@ -11,7 +11,7 @@ services:
     build:
       context: ./build
       args:
-        UPSTREAM_VERSION: v0.9.0-rc2
+        UPSTREAM_VERSION: v0.9.0
     image: "ipfs.dnp.dappnode.eth:0.2.15"
     container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
     restart: unless-stopped

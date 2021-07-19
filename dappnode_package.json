@@ -1,14 +1,12 @@
 {
   "name": "ipfs.dnp.dappnode.eth",
   "version": "0.2.15",
-  "upstreamVersion": "v0.9.0-rc2",
+  "upstreamVersion": "v0.9.0",
   "description": "Dappnode package responsible for providing IPFS connectivity",
   "type": "dncore",
   "architectures": ["linux/amd64", "linux/arm64"],
   "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
-  "contributors": [
-    "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"
-  ],
+  "contributors": ["Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"],
   "upstreamRepo": "ipfs/go-ipfs",
   "upstreamArg": "UPSTREAM_VERSION",
   "keywords": ["DAppNodeCore", "IPFS"],
