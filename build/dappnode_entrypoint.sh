@@ -51,5 +51,17 @@ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
 ipfs config --json Datastore.StorageMax "\"$DATASTORE_STORAGEMAX\""
 
-#! Add extra opts
-exec ipfs "$@" "$EXTRA_OPTS"
+#! Add handler
+sigterm_handler () {
+  echo -e "Caught singal. Stopping ipfs service gracefully"
+  exit 0
+}
+
+trap 'sigterm_handler' TERM INT
+
+# Possible values for EXTRA_OPTS (must have --): https://docs.ipfs.io/reference/cli/#ipfs-daemon
+# Join arguments with EXTRA_OPTS if var not empty.
+if [ ! -z $EXTRA_OPTS ]; then
+    set -- "$@" "$EXTRA_OPTS"
+fi
+exec ipfs "$@"
