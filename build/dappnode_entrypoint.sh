@@ -7,7 +7,7 @@ user=ipfs
 # IPFS_PATH=/data/ipfs
 repo="$IPFS_PATH" 
 
-# Run migrations
+# Run ipfs repo migrations: https://github.com/ipfs/fs-repo-migrations/blob/master/run.md
 fs-repo-migrations -y
 
 #! If the user changes then the volumes could not be used and the ipfs init will fail
