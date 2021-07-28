@@ -26,8 +26,16 @@ else
     ipfs init
 fi
 
-# Run ipfs repo migrations: https://github.com/ipfs/fs-repo-migrations/blob/master/run.md (ALWAYS AFTER ipfs init)
-fs-repo-migrations -y
+# Run ipfs repo migrations: https://github.com/ipfs/fs-repo-migrations/blob/master/run.md
+# - After ipfs init (has created volumes)
+# - If current fs sversion is lower than the latest
+IPFS_REPO_CURRENT_VERSION=$(cat /data/ipfs/version)
+echo "Current version: $IPFS_REPO_CURRENT_VERSION"
+IPFS_REPO_LATEST_VERSION=$(fs-repo-migrations -v)
+echo "Latest version: $IPFS_REPO_LATEST_VERSION"
+if [ "$IPFS_REPO_LATEST_VERSION" -gt "$IPFS_REPO_CURRENT_VERSION" ]; then
+    exec fs-repo-migrations -y
+fi
 
 #! Check profile set
 if [ "$PROFILE" != "custom" ] && [ "$PROFILE" != "none" ]; then

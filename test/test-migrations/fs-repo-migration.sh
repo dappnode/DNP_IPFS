@@ -19,6 +19,10 @@ IPFS_NEW=v0.9.1
 # 0. Set-up
 echo -e "\e[34m [INFO] Creating dncore_network if needed...\e[0m"
 docker network create --driver bridge --subnet 172.33.0.0/16 dncore_network
+echo -e "\e[34m [INFO] Creating dns with DNP_BIND\e[0m"
+git clone https://github.com/dappnode/DNP_BIND.git
+docker-compose -f DNP_BIND/docker-compose.yml build
+docker-compose -f DNP_BIND/docker-compose.yml up -d
 
 # 1. Start container with older image to create old volumes
 echo -e "\e[34m [INFO] Build old ipfs ${IPFS_OLD}\e[0m"
