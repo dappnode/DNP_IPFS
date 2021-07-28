@@ -7,9 +7,6 @@ user=ipfs
 # IPFS_PATH=/data/ipfs
 repo="$IPFS_PATH" 
 
-# Run ipfs repo migrations: https://github.com/ipfs/fs-repo-migrations/blob/master/run.md
-fs-repo-migrations -y
-
 #! If the user changes then the volumes could not be used and the ipfs init will fail
 # if [ `id -u` -eq 0 ]; then
 #   echo "Changing user to $user"
@@ -28,6 +25,9 @@ if [ -e "$repo/config" ]; then
 else
     ipfs init
 fi
+
+# Run ipfs repo migrations: https://github.com/ipfs/fs-repo-migrations/blob/master/run.md (ALWAYS AFTER ipfs init)
+fs-repo-migrations -y
 
 #! Check profile set
 if [ "$PROFILE" != "custom" ] && [ "$PROFILE" != "none" ]; then

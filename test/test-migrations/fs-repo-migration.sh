@@ -27,7 +27,7 @@ docker-compose -f docker-compose.yml up -d
 sleep 10
 docker-compose down
 
-# 2. Start container with newer image to migrate old volumes
+# 2. Start container with newer image to migrate old volumes created by previous container
 echo -e "\e[34m [INFO] Build new ipfs ${IPFS_NEW}\e[0m"
 docker-compose build --build-arg UPSTREAM_VERSION=${IPFS_NEW}
 docker-compose -f docker-compose.yml up -d
