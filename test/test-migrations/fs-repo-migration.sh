@@ -34,5 +34,5 @@ docker-compose -f docker-compose.yml up -d
 sleep 10
 
 echo -e "\e[32m [INFO] Check logs for migration\e[0m"
-docker logs DAppNodeCore-ipfs-dnp.dappnode.eth
+docker logs DAppNodeCore-ipfs.dnp.dappnode.eth
 docker-compose down
