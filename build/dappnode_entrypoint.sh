@@ -7,7 +7,7 @@ user=ipfs
 # IPFS_PATH=/data/ipfs
 repo="$IPFS_PATH" 
 
-#! If the user changes then the volumes could not be used and the ipfs init will fail
+# If the user changes then the volumes could not be used and the ipfs init will fail
 # if [ `id -u` -eq 0 ]; then
 #   echo "Changing user to $user"
 #   # ensure folder is writable
@@ -19,7 +19,7 @@ repo="$IPFS_PATH"
 # 2nd invocation with regular user
 ipfs version
 
-#! ipfs init will create the config file /data/ipfs/config
+# ipfs init will create the config file /data/ipfs/config
 if [ -e "$repo/config" ]; then
     echo "Found IPFS fs-repo at $repo"
 else
@@ -28,16 +28,23 @@ fi
 
 # Run ipfs repo migrations: https://github.com/ipfs/fs-repo-migrations/blob/master/run.md
 # - After ipfs init (has created volumes)
-# - If current fs sversion is lower than the latest
+# - If current fs repo version is lower than the stable defined
+# - If the current go-ipfs version is greater or equal than the stable defined
+
 IPFS_REPO_CURRENT_VERSION=$(cat /data/ipfs/version)
-echo "Current version: $IPFS_REPO_CURRENT_VERSION"
-IPFS_REPO_LATEST_VERSION=$(fs-repo-migrations -v)
-echo "Latest version: $IPFS_REPO_LATEST_VERSION"
-if [ "$IPFS_REPO_LATEST_VERSION" -gt "$IPFS_REPO_CURRENT_VERSION" ]; then
-    exec fs-repo-migrations -y
+# Latest fs version available can be fetch with: fs-repo-migrations -v
+# fs repo migration version 11 for go-ipfs versions 0.8.0-current. https://github.com/ipfs/fs-repo-migrations
+IPFS_REPO_STABLE_VERSION=11
+
+IPFS_GO_CURRENT_VERSION=$(ipfs version --number)
+IPFS_GO_MINIMUM_STABLE_VERSION=0.8.0
+
+if [ "$IPFS_REPO_STABLE_VERSION" -gt "$IPFS_REPO_CURRENT_VERSION" ] && [ "$(echo -e "${IPFS_GO_CURRENT_VERSION}\n${IPFS_GO_MINIMUM_STABLE_VERSION}" | sort -V | head -n1)" == "${IPFS_GO_MINIMUM_STABLE_VERSION}" ]; then
+    echo "Migrating fs repo from ${IPFS_REPO_CURRENT_VERSION} to ${IPFS_REPO_STABLE_VERSION}"
+    fs-repo-migrations -y
 fi
 
-#! Check profile set
+# Check profile set
 if [ "$PROFILE" != "custom" ] && [ "$PROFILE" != "none" ]; then
     # Regular profile in ipfs: https://docs.ipfs.io/how-to/configure-node/#profiles
     ipfs config profile apply $PROFILE
@@ -57,12 +64,12 @@ fi
 
 ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
 ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
-#! More networking configuration from dappnode
+# More networking configuration from dappnode
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
 ipfs config --json Datastore.StorageMax "\"$DATASTORE_STORAGEMAX\""
 
-#! Add handler
+# Add handler
 sigterm_handler () {
   echo -e "Caught singal. Stopping ipfs service gracefully"
   exit 0
