@@ -8,6 +8,7 @@ volumes:
   ipfsdnpdappnodeeth_data: {}
 services:
   ipfs.dnp.dappnode.eth:
+    container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
     build:
       context: ./build
       args:
