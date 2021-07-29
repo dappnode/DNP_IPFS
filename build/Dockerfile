@@ -1,14 +1,14 @@
 ARG UPSTREAM_VERSION
 
 # Ipfs migration tool
-FROM alpine as fs-repo-migrations
+FROM debian:buster-slim as fs-repo-migrations
 WORKDIR /usr/src/app
 # Update and install deps
-RUN apk update && apk add curl && apk add tar
+RUN apt update && apt install curl -y && apt install tar -y
 # Fetch ipfs migration tool
 # Dir destin: /usr/src/app/fs-repo-migrations/fs-repo-migrations
 # Source: https://dist.ipfs.io/#fs-repo-migrations
-RUN curl https://dist.ipfs.io/fs-repo-migrations/v2.0.1/fs-repo-migrations_v2.0.1_linux-amd64.tar.gz -o fs-repo-migrations.tar.gz \
+RUN if [ "$(arch)" == "x86_64" ]; then  export ARCH="amd64"; else export ARCH="arm64"; fi && curl https://dist.ipfs.io/fs-repo-migrations/v2.0.1/fs-repo-migrations_v2.0.1_linux-${ARCH}.tar.gz -o fs-repo-migrations.tar.gz \
     && tar -zxvf fs-repo-migrations.tar.gz
 
 # Use official ipfs docker image
