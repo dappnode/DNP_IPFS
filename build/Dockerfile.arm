@@ -3,6 +3,7 @@
 #             supports ARM ARCHITECTURES: https://hub.docker.com/r/ipfs/go-ipfs/tags
 
 ARG UPSTREAM_VERSION
+ARG TARGETARCH
 
 #####################
 # Ipfs migration tool
@@ -15,7 +16,7 @@ RUN apt update && apt install curl -y && apt install tar -y
 # Fetch ipfs migration tool
 # Dir destin: /usr/src/app/fs-repo-migrations/fs-repo-migrations
 # Source: https://dist.ipfs.io/#fs-repo-migrations
-RUN if [ "$(arch)" == "x86_64" ]; then  export ARCH="amd64"; else export ARCH="arm64"; fi && curl https://dist.ipfs.io/fs-repo-migrations/v2.0.1/fs-repo-migrations_v2.0.1_linux-${ARCH}.tar.gz -o fs-repo-migrations.tar.gz \
+RUN curl https://dist.ipfs.io/fs-repo-migrations/v2.0.1/fs-repo-migrations_v2.0.1_linux-${TARGETARCH:-amd64}.tar.gz -o fs-repo-migrations.tar.gz \
     && tar -zxvf fs-repo-migrations.tar.gz
 
 ###########
@@ -23,6 +24,7 @@ RUN if [ "$(arch)" == "x86_64" ]; then  export ARCH="amd64"; else export ARCH="a
 ###########
 
 FROM golang:1.15-buster as builder
+ARG UPSTREAM_VERSION
 
 ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
 
@@ -82,8 +84,6 @@ COPY --from=builder /lib/*-linux-gnu*/libdl.so.2 /lib/
 # Copy over SSL libraries.
 COPY --from=builder /usr/lib/*-linux-gnu*/libssl.so* /usr/lib/
 COPY --from=builder /usr/lib/*-linux-gnu*/libcrypto.so* /usr/lib/
-
-COPY start_ipfs /usr/local/bin/start_ipfs
 
 # Swarm TCP; should be exposed to the public
 EXPOSE 4001
