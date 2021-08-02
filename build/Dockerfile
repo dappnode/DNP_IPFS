@@ -10,10 +10,6 @@ RUN apt-get update && apt-get install -y \
   ca-certificates \
   fuse
 
-# Preload an in-tree but disabled-by-default plugin by adding it to the IPFS_PLUGINS variable
-# e.g. docker build --build-arg IPFS_PLUGINS="foo bar baz"
-ARG IPFS_PLUGINS
-
 RUN set -eux; \
   dpkgArch="$(dpkg --print-architecture)"; \
   case "${dpkgArch##*-}" in \
@@ -48,6 +44,8 @@ COPY dappnode_entrypoint.sh $SRC_DIR/bin/dappnode_entrypoint
 
 # Ipfs migration tool
 FROM golang:1.15-buster as fs-repo-migrations
+ARG TARGETARCH
+
 WORKDIR /usr/src/app
 # Update and install deps
 RUN apt update && apt install curl -y && apt install tar -y
@@ -56,7 +54,6 @@ RUN apt update && apt install curl -y && apt install tar -y
 # Source: https://dist.ipfs.io/#fs-repo-migrations
 RUN curl https://dist.ipfs.io/fs-repo-migrations/v2.0.1/fs-repo-migrations_v2.0.1_linux-${TARGETARCH:-amd64}.tar.gz -o fs-repo-migrations.tar.gz \
     && tar -zxvf fs-repo-migrations.tar.gz
-
 
 # Now comes the actual target image, which aims to be as small as possible.
 FROM busybox:1.31.1-glibc
