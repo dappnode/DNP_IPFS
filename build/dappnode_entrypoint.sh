@@ -41,7 +41,7 @@ IPFS_GO_MINIMUM_STABLE_VERSION=0.8.0
 
 if [ "$IPFS_REPO_STABLE_VERSION" -gt "$IPFS_REPO_CURRENT_VERSION" ] && [ "$(echo -e "${IPFS_GO_CURRENT_VERSION}\n${IPFS_GO_MINIMUM_STABLE_VERSION}" | sort -V | head -n1)" == "${IPFS_GO_MINIMUM_STABLE_VERSION}" ]; then
     echo "Migrating fs repo from ${IPFS_REPO_CURRENT_VERSION} to ${IPFS_REPO_STABLE_VERSION}"
-    fs-repo-migrations -y
+    fs-repo-migrations -to "$IPFS_REPO_STABLE_VERSION" -y
 fi
 
 # Check profile set
