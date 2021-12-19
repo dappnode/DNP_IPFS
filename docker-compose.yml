@@ -24,7 +24,7 @@ services:
     environment:
       - EXTRA_OPTS
       - DATASTORE_STORAGEMAX=50GB
-      - PROFILE=custom
+      - PROFILE=server
       - ROUTING=dhtclient
       - DISCOVERY_MDNS_ENABLED=true
       - SWARM_DISABLENATPORTMAP=false
