@@ -52,7 +52,7 @@ RUN apt update && apt install curl -y && apt install tar -y
 # Fetch ipfs migration tool
 # Dir destin: /usr/src/app/fs-repo-migrations/fs-repo-migrations
 # Source: https://dist.ipfs.io/#fs-repo-migrations
-RUN curl https://dist.ipfs.io/fs-repo-migrations/v2.0.1/fs-repo-migrations_v2.0.1_linux-${TARGETARCH:-amd64}.tar.gz -o fs-repo-migrations.tar.gz \
+RUN curl https://dist.ipfs.io/fs-repo-migrations/v2.0.2/fs-repo-migrations_v2.0.2_linux-${TARGETARCH:-amd64}.tar.gz -o fs-repo-migrations.tar.gz \
     && tar -zxvf fs-repo-migrations.tar.gz
 
 # Now comes the actual target image, which aims to be as small as possible.
