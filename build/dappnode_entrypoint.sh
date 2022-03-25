@@ -33,15 +33,25 @@ fi
 
 IPFS_REPO_CURRENT_VERSION=$(cat /data/ipfs/version)
 # Latest fs version available can be fetch with: fs-repo-migrations -v
-# fs repo migration version 11 for go-ipfs versions 0.8.0-current. https://github.com/ipfs/fs-repo-migrations
-IPFS_REPO_STABLE_VERSION=11
 
 IPFS_GO_CURRENT_VERSION=$(ipfs version --number)
-IPFS_GO_MINIMUM_STABLE_VERSION=0.8.0
 
-if [ "$IPFS_REPO_STABLE_VERSION" -gt "$IPFS_REPO_CURRENT_VERSION" ] && [ "$(echo -e "${IPFS_GO_CURRENT_VERSION}\n${IPFS_GO_MINIMUM_STABLE_VERSION}" | sort -V | head -n1)" == "${IPFS_GO_MINIMUM_STABLE_VERSION}" ]; then
-    echo "Migrating fs repo from ${IPFS_REPO_CURRENT_VERSION} to ${IPFS_REPO_STABLE_VERSION}"
-    fs-repo-migrations -to "$IPFS_REPO_STABLE_VERSION" -y
+
+# Migration to version 11
+# fs repo migration version 11 for go-ipfs versions 0.8.0-current. https://github.com/ipfs/fs-repo-migrations
+IPFS_MIGRATION_ELEVEN=11
+IPFS_MIGRATION_ELEVEN_MINIMUM=0.8.0
+if [ "$IPFS_MIGRATION_ELEVEN" -gt "$IPFS_REPO_CURRENT_VERSION" ] && [ "$(echo -e "${IPFS_GO_CURRENT_VERSION}\n${IPFS_MIGRATION_ELEVEN_MINIMUM}" | sort -V | head -n1)" == "${IPFS_MIGRATION_ELEVEN_MINIMUM}" ]; then
+    echo "Migrating fs repo from ${IPFS_REPO_CURRENT_VERSION} to ${IPFS_MIGRATION_ELEVEN}"
+    fs-repo-migrations -to "$IPFS_MIGRATION_ELEVEN" -y
+fi
+
+# Migration to version 12
+IPFS_MIGRATION_TWELVE=12
+IPFS_MIGRATION_TWELVE_MINIMUM=0.11.0
+if [ "$IPFS_MIGRATION_TWELVE" -gt "$IPFS_REPO_CURRENT_VERSION" ] && [ "$(echo -e "${IPFS_GO_CURRENT_VERSION}\n${IPFS_MIGRATION_TWELVE_MINIMUM}" | sort -V | head -n1)" == "${IPFS_MIGRATION_TWELVE_MINIMUM}" ]; then
+    echo "Migrating fs repo from ${IPFS_REPO_CURRENT_VERSION} to ${IPFS_MIGRATION_TWELVE}"
+    fs-repo-migrations -to "$IPFS_MIGRATION_TWELVE" -y
 fi
 
 # Check profile set
