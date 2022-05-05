@@ -12,7 +12,7 @@ services:
     build:
       context: ./build
       args:
-        UPSTREAM_VERSION: v0.12.1
+        UPSTREAM_VERSION: v0.13.0-rc1
     image: "ipfs.dnp.dappnode.eth:0.2.16"
     restart: unless-stopped
     volumes:
