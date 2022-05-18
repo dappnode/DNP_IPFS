@@ -1,13 +1,14 @@
 FROM golang:1.15-buster
 
-ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
+ENV SRC_DIR /go-ipfs
 
 ARG UPSTREAM_VERSION
 
 # Install deps
 RUN apt-get update && apt-get install -y \
   libssl-dev \
-  ca-certificates 
+  ca-certificates \
+  fuse
 
 RUN set -eux; \
   dpkgArch="$(dpkg --print-architecture)"; \
@@ -34,20 +35,47 @@ RUN set -eux; \
   && git clone https://github.com/ncopa/su-exec.git \
   && cd su-exec \
   && git checkout -q $SUEXEC_VERSION \
-  && make \
+  && make su-exec-static \
   && cd /tmp \
   && wget -q -O tini https://github.com/krallin/tini/releases/download/$TINI_VERSION/$tiniArch \
   && chmod +x tini
+
+COPY dappnode_entrypoint.sh $SRC_DIR/bin/dappnode_entrypoint
+
+# Ipfs migration tool
+FROM golang:1.15-buster as fs-repo-migrations
+ARG TARGETARCH
+
+WORKDIR /usr/src/app
+# Update and install deps
+RUN apt update && apt install curl -y && apt install tar -y
+# Fetch ipfs migration tool
+# Dir destin: /usr/src/app/fs-repo-migrations/fs-repo-migrations
+# Source: https://dist.ipfs.io/#fs-repo-migrations
+RUN curl https://dist.ipfs.io/fs-repo-migrations/v2.0.2/fs-repo-migrations_v2.0.2_linux-${TARGETARCH:-amd64}.tar.gz -o fs-repo-migrations.tar.gz \
+    && tar -zxvf fs-repo-migrations.tar.gz
 
 # Now comes the actual target image, which aims to be as small as possible.
 FROM busybox:1.31.1-glibc
 
 # Get the ipfs binary, entrypoint script, and TLS CAs from the build container.
-ENV SRC_DIR /go/src/github.com/ipfs/go-ipfs
+ENV SRC_DIR /go-ipfs
+
 COPY --from=0 $SRC_DIR/go-ipfs/ipfs /usr/local/bin/ipfs
-COPY --from=0 /tmp/su-exec/su-exec /sbin/su-exec
+COPY --from=0 $SRC_DIR/bin/dappnode_entrypoint /usr/local/bin/dappnode_entrypoint
+COPY --from=0 /tmp/su-exec/su-exec-static /sbin/su-exec
 COPY --from=0 /tmp/tini /sbin/tini
+COPY --from=0 /bin/fusermount /usr/local/bin/fusermount
 COPY --from=0 /etc/ssl/certs /etc/ssl/certs
+
+# Copy fs-repo-migrations from previous stage in /usr/local/bin/fs-repo-migrations
+COPY --from=fs-repo-migrations /usr/src/app/fs-repo-migrations/fs-repo-migrations /usr/local/bin/fs-repo-migrations
+
+# Add suid bit on fusermount so it will run properly
+RUN chmod 4755 /usr/local/bin/fusermount
+
+# Fix permissions on dappnode_entrypoint (ignore the build machine's permissions)
+RUN chmod 0755 /usr/local/bin/dappnode_entrypoint
 
 # This shared lib (part of glibc) doesn't seem to be included with busybox.
 COPY --from=0 /lib/*-linux-gnu*/libdl.so.2 /lib/
@@ -55,8 +83,6 @@ COPY --from=0 /lib/*-linux-gnu*/libdl.so.2 /lib/
 # Copy over SSL libraries.
 COPY --from=0 /usr/lib/*-linux-gnu*/libssl.so* /usr/lib/
 COPY --from=0 /usr/lib/*-linux-gnu*/libcrypto.so* /usr/lib/
-
-COPY start_ipfs /usr/local/bin/start_ipfs
 
 # Swarm TCP; should be exposed to the public
 EXPOSE 4001
@@ -90,7 +116,7 @@ ENV IPFS_LOGGING ""
 # This just makes sure that:
 # 1. There's an fs-repo, and initializes one if there isn't.
 # 2. The API and Gateway are accessible from outside the container.
-ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/start_ipfs"]
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/dappnode_entrypoint" ]
 
 # Execute the daemon subcommand by default
-CMD ["daemon", "--migrate=true"]
+CMD [ "daemon", "--migrate=true" ]
