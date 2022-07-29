@@ -1,6 +1,6 @@
-FROM golang:1.15-buster
+FROM golang:1.18.3-buster
 
-ENV SRC_DIR /go-ipfs
+ENV SRC_DIR /kubo
 
 ARG UPSTREAM_VERSION
 
@@ -18,8 +18,8 @@ RUN set -eux; \
   esac; \
   mkdir -p ${SRC_DIR} \
   && cd $SRC_DIR \
-  && wget https://github.com/ipfs/go-ipfs/releases/download/${UPSTREAM_VERSION}/go-ipfs_${UPSTREAM_VERSION}_linux-${dpkgArch}.tar.gz -O $SRC_DIR/go-ipfs_${UPSTREAM_VERSION}_linux-${dpkgArch}.tar.gz \
-  && tar -xzvf go-ipfs_${UPSTREAM_VERSION}_linux-${dpkgArch}.tar.gz
+  && wget https://github.com/ipfs/kubo/releases/download/${UPSTREAM_VERSION}/kubo_${UPSTREAM_VERSION}_linux-${dpkgArch}.tar.gz -O $SRC_DIR/kubo_${UPSTREAM_VERSION}_linux-${dpkgArch}.tar.gz \
+  && tar -xzvf kubo_${UPSTREAM_VERSION}_linux-${dpkgArch}.tar.gz
 
 # Get su-exec, a very minimal tool for dropping privileges,
 # and tini, a very minimal init daemon for containers
@@ -53,15 +53,15 @@ RUN apt update && apt install curl -y && apt install tar -y
 # Dir destin: /usr/src/app/fs-repo-migrations/fs-repo-migrations
 # Source: https://dist.ipfs.io/#fs-repo-migrations
 RUN curl https://dist.ipfs.io/fs-repo-migrations/v2.0.2/fs-repo-migrations_v2.0.2_linux-${TARGETARCH:-amd64}.tar.gz -o fs-repo-migrations.tar.gz \
-    && tar -zxvf fs-repo-migrations.tar.gz
+  && tar -zxvf fs-repo-migrations.tar.gz
 
 # Now comes the actual target image, which aims to be as small as possible.
 FROM busybox:1.31.1-glibc
 
 # Get the ipfs binary, entrypoint script, and TLS CAs from the build container.
-ENV SRC_DIR /go-ipfs
+ENV SRC_DIR /kubo
 
-COPY --from=0 $SRC_DIR/go-ipfs/ipfs /usr/local/bin/ipfs
+COPY --from=0 $SRC_DIR/cmd/ipfs/ipfs /usr/local/bin/ipfs
 COPY --from=0 $SRC_DIR/bin/dappnode_entrypoint /usr/local/bin/dappnode_entrypoint
 COPY --from=0 /tmp/su-exec/su-exec-static /sbin/su-exec
 COPY --from=0 /tmp/tini /sbin/tini
