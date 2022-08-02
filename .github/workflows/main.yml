@@ -10,20 +10,6 @@ on:
       - "README.md"
 
 jobs:
-  fs-repo-migration-test:
-    runs-on: ubuntu-latest
-    name: IPFS File system migration
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./test/test-migrations/fs-repo-migration.sh
-
-  integration-test:
-    runs-on: ubuntu-16.04
-    name: Integration tests
-    steps:
-      - uses: actions/checkout@v2
-      - run: ./test/test-ipfs-commands/test.sh
-
   build-test:
     runs-on: ubuntu-latest
     name: Build test

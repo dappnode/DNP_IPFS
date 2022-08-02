@@ -5,16 +5,16 @@
 set -e
 user=ipfs
 # IPFS_PATH=/data/ipfs
-repo="$IPFS_PATH" 
+repo="$IPFS_PATH"
 
 # If the user changes then the volumes could not be used and the ipfs init will fail
-# if [ `id -u` -eq 0 ]; then
-#   echo "Changing user to $user"
-#   # ensure folder is writable
-#   su-exec "$user" test -w "$repo" || chown -R -- "$user" "$repo"
-#   # restart script with new privileges
-#   exec su-exec "$user" "$0" "$@"
-# fi
+if [ $(id -u) -eq 0 ]; then
+    echo "Changing user to $user"
+    # ensure folder is writable
+    chown -R -- "$user" "$repo"
+    # restart script with new privileges
+    exec su-exec "$user" "$0" "$@"
+fi
 
 # 2nd invocation with regular user
 ipfs version
@@ -24,34 +24,6 @@ if [ -e "$repo/config" ]; then
     echo "Found IPFS fs-repo at $repo"
 else
     ipfs init
-fi
-
-# Run ipfs repo migrations: https://github.com/ipfs/fs-repo-migrations/blob/master/run.md
-# - After ipfs init (has created volumes)
-# - If current fs repo version is lower than the stable defined
-# - If the current go-ipfs version is greater or equal than the stable defined
-
-IPFS_REPO_CURRENT_VERSION=$(cat /data/ipfs/version)
-# Latest fs version available can be fetch with: fs-repo-migrations -v
-
-IPFS_GO_CURRENT_VERSION=$(ipfs version --number)
-
-
-# Migration to version 11
-# fs repo migration version 11 for go-ipfs versions 0.8.0-current. https://github.com/ipfs/fs-repo-migrations
-IPFS_MIGRATION_ELEVEN=11
-IPFS_MIGRATION_ELEVEN_MINIMUM=0.8.0
-if [ "$IPFS_MIGRATION_ELEVEN" -gt "$IPFS_REPO_CURRENT_VERSION" ] && [ "$(echo -e "${IPFS_GO_CURRENT_VERSION}\n${IPFS_MIGRATION_ELEVEN_MINIMUM}" | sort -V | head -n1)" == "${IPFS_MIGRATION_ELEVEN_MINIMUM}" ]; then
-    echo "Migrating fs repo from ${IPFS_REPO_CURRENT_VERSION} to ${IPFS_MIGRATION_ELEVEN}"
-    fs-repo-migrations -to "$IPFS_MIGRATION_ELEVEN" -y
-fi
-
-# Migration to version 12
-IPFS_MIGRATION_TWELVE=12
-IPFS_MIGRATION_TWELVE_MINIMUM=0.11.0
-if [ "$IPFS_MIGRATION_TWELVE" -gt "$IPFS_REPO_CURRENT_VERSION" ] && [ "$(echo -e "${IPFS_GO_CURRENT_VERSION}\n${IPFS_MIGRATION_TWELVE_MINIMUM}" | sort -V | head -n1)" == "${IPFS_MIGRATION_TWELVE_MINIMUM}" ]; then
-    echo "Migrating fs repo from ${IPFS_REPO_CURRENT_VERSION} to ${IPFS_MIGRATION_TWELVE}"
-    fs-repo-migrations -to "$IPFS_MIGRATION_TWELVE" -y
 fi
 
 # Check profile set
@@ -80,9 +52,9 @@ ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", 
 ipfs config --json Datastore.StorageMax "\"$DATASTORE_STORAGEMAX\""
 
 # Add handler
-sigterm_handler () {
-  echo -e "Caught singal. Stopping ipfs service gracefully"
-  exit 0
+sigterm_handler() {
+    echo -e "Caught singal. Stopping ipfs service gracefully"
+    exit 0
 }
 
 trap 'sigterm_handler' TERM INT
@@ -92,4 +64,6 @@ trap 'sigterm_handler' TERM INT
 if [ ! -z $EXTRA_OPTS ]; then
     set -- "$@" "$EXTRA_OPTS"
 fi
-exec ipfs "$@"
+
+# Execute the daemon subcommand by default
+exec /sbin/tini -- /usr/local/bin/start_ipfs daemon --migrate=true --agent-version-suffix=docker "$@"
