@@ -26,33 +26,6 @@ else
     ipfs init
 fi
 
-# Run ipfs repo migrations: https://github.com/ipfs/fs-repo-migrations/blob/master/run.md
-# - After ipfs init (has created volumes)
-# - If current fs repo version is lower than the stable defined
-# - If the current go-ipfs version is greater or equal than the stable defined
-
-IPFS_REPO_CURRENT_VERSION=$(cat /data/ipfs/version)
-# Latest fs version available can be fetch with: fs-repo-migrations -v
-
-IPFS_GO_CURRENT_VERSION=$(ipfs version --number)
-
-# Migration to version 11
-# fs repo migration version 11 for go-ipfs versions 0.8.0-current. https://github.com/ipfs/fs-repo-migrations
-IPFS_MIGRATION_ELEVEN=11
-IPFS_MIGRATION_ELEVEN_MINIMUM=0.8.0
-if [ "$IPFS_MIGRATION_ELEVEN" -gt "$IPFS_REPO_CURRENT_VERSION" ] && [ "$(echo -e "${IPFS_GO_CURRENT_VERSION}\n${IPFS_MIGRATION_ELEVEN_MINIMUM}" | sort -V | head -n1)" == "${IPFS_MIGRATION_ELEVEN_MINIMUM}" ]; then
-    echo "Migrating fs repo from ${IPFS_REPO_CURRENT_VERSION} to ${IPFS_MIGRATION_ELEVEN}"
-    fs-repo-migrations -to "$IPFS_MIGRATION_ELEVEN" -y
-fi
-
-# Migration to version 12
-IPFS_MIGRATION_TWELVE=12
-IPFS_MIGRATION_TWELVE_MINIMUM=0.11.0
-if [ "$IPFS_MIGRATION_TWELVE" -gt "$IPFS_REPO_CURRENT_VERSION" ] && [ "$(echo -e "${IPFS_GO_CURRENT_VERSION}\n${IPFS_MIGRATION_TWELVE_MINIMUM}" | sort -V | head -n1)" == "${IPFS_MIGRATION_TWELVE_MINIMUM}" ]; then
-    echo "Migrating fs repo from ${IPFS_REPO_CURRENT_VERSION} to ${IPFS_MIGRATION_TWELVE}"
-    fs-repo-migrations -to "$IPFS_MIGRATION_TWELVE" -y
-fi
-
 # Check profile set
 if [ "$PROFILE" != "custom" ] && [ "$PROFILE" != "none" ]; then
     # Regular profile in ipfs: https://docs.ipfs.io/how-to/configure-node/#profiles
