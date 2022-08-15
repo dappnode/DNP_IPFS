@@ -50,6 +50,10 @@ ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
 ipfs config --json Datastore.StorageMax "\"$DATASTORE_STORAGEMAX\""
+ipfs config --json Datastore.StorageMax "\"$DATASTORE_STORAGEMAX\""
+
+## Provides origin isolation between content roots: https://github.com/ipfs/kubo/blob/master/docs/config.md#gatewaypublicgateways-usesubdomains
+ipfs config --json Gateway.PublicGateways '{"ipfs.dappnode": { "NoDNSLink": false, "Paths": [ "/ipfs" , "/ipns" ], "UseSubdomains": true }}'
 
 # Add handler
 sigterm_handler() {
