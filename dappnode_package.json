@@ -9,7 +9,7 @@
   "contributors": [
     "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"
   ],
-  "upstreamRepo": "ipfs/go-ipfs",
+  "upstreamRepo": "ipfs/kubo",
   "upstreamArg": "UPSTREAM_VERSION",
   "keywords": ["DAppNodeCore", "IPFS"],
   "links": {
