@@ -13,7 +13,7 @@ services:
       context: ./src
       args:
         UPSTREAM_VERSION: v0.22.0
-    image: "ipfs.dnp.dappnode.eth:0.2.16"
+    image: "ipfs.dnp.dappnode.eth:0.2.20"
     restart: unless-stopped
     volumes:
       - "ipfsdnpdappnodeeth_export:/export"
