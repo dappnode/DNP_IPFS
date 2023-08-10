@@ -13,4 +13,5 @@ RUN wget https://dist.ipfs.tech/fs-repo-migrations/v2.0.2/fs-repo-migrations_v2.
 FROM ipfs/kubo:${UPSTREAM_VERSION}
 COPY dappnode_entrypoint.sh /usr/local/bin/
 COPY --from=fs-repo-migrations /usr/local/bin/fs-repo-migrations /usr/local/bin/
+USER ipfs
 ENTRYPOINT ["/usr/local/bin/dappnode_entrypoint.sh"]

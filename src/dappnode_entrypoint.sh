@@ -3,20 +3,11 @@
 # This is a copy of the original_entrypoint.sh script
 
 set -e
-user=ipfs
+
 # IPFS_PATH=/data/ipfs
 repo="$IPFS_PATH"
 
-fs-repo-migrations
-
-# If the user changes then the volumes could not be used and the ipfs init will fail
-if [ $(id -u) -eq 0 ]; then
-    echo "Changing user to $user"
-    # ensure folder is writable
-    chown -R -- "$user" "$repo"
-    # restart script with new privileges
-    exec su-exec "$user" "$0" "$@"
-fi
+fs-repo-migrations -y
 
 # 2nd invocation with regular user
 ipfs version
