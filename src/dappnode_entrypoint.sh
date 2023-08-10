@@ -3,18 +3,11 @@
 # This is a copy of the original_entrypoint.sh script
 
 set -e
-user=ipfs
+
 # IPFS_PATH=/data/ipfs
 repo="$IPFS_PATH"
 
-# If the user changes then the volumes could not be used and the ipfs init will fail
-if [ $(id -u) -eq 0 ]; then
-    echo "Changing user to $user"
-    # ensure folder is writable
-    chown -R -- "$user" "$repo"
-    # restart script with new privileges
-    exec su-exec "$user" "$0" "$@"
-fi
+fs-repo-migrations -y
 
 # 2nd invocation with regular user
 ipfs version
@@ -54,14 +47,6 @@ ipfs config --json Datastore.StorageMax "\"$DATASTORE_STORAGEMAX\""
 
 ## Provides origin isolation between content roots: https://github.com/ipfs/kubo/blob/master/docs/config.md#gatewaypublicgateways-usesubdomains
 ipfs config --json Gateway.PublicGateways '{"ipfs.dappnode": { "NoDNSLink": false, "Paths": [ "/ipfs" , "/ipns" ], "UseSubdomains": true }}'
-
-# Add handler
-sigterm_handler() {
-    echo -e "Caught singal. Stopping ipfs service gracefully"
-    exit 0
-}
-
-trap 'sigterm_handler' TERM INT
 
 # Possible values for EXTRA_OPTS (must have --): https://docs.ipfs.io/reference/cli/#ipfs-daemon
 # Join arguments with EXTRA_OPTS if var not empty.
