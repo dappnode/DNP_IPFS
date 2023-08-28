@@ -7,8 +7,6 @@ set -e
 # IPFS_PATH=/data/ipfs
 repo="$IPFS_PATH"
 
-fs-repo-migrations -y
-
 # 2nd invocation with regular user
 ipfs version
 
@@ -18,6 +16,8 @@ if [ -e "$repo/config" ]; then
 else
     ipfs init
 fi
+
+fs-repo-migrations -y
 
 # Check profile set
 if [ "$PROFILE" != "custom" ] && [ "$PROFILE" != "none" ]; then
