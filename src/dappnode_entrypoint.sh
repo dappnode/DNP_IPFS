@@ -17,7 +17,7 @@ else
     ipfs init
 fi
 
-fs-repo-migrations -y
+fs-repo-migrations -revert-ok -to 14 -y
 
 # Check profile set
 if [ "$PROFILE" != "custom" ] && [ "$PROFILE" != "none" ]; then
