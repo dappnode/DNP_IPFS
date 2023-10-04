@@ -38,4 +38,4 @@ services:
         ipv4_address: 172.33.1.5
         aliases:
           - ipfs.dappnode
-          - ipfs.dappnode.dappnode
+          - ipfs.ipfs.dappnode
