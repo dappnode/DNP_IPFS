@@ -32,6 +32,8 @@ services:
       - SWARM_CONNMGR_LOWWATER=600
       - SWARM_CONNMGR_HIGHWATER=900
       - SWARM_CONNMGR_GRACEPERIOD=20s
+    security_opt:
+      - "seccomp:unconfined"
     networks:
       dncore_network:
         aliases:
