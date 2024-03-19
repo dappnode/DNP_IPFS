@@ -24,7 +24,7 @@ fields:
 
       - **none**: Your node will use no routing system. You'll have to explicitly 
         connect to peers that have the content you're looking for.
-        We recommend at least to [add a DAppNoder IPFS peer](http://my.dappnode/#/system/add-ipfs-peer/%2Fdns4%2Fipfs.dappnode.io%2Ftcp%2F4001%2Fipfs%2FQmfB6dT5zxUq1BXiXisgcZKYkvjywdDYBK5keRaqDKH633) 
+        We recommend at least to [add a DAppNoder IPFS peer](http://my.dappnode/system/add-ipfs-peer/%2Fdns4%2Fipfs.dappnode.io%2Ftcp%2F4001%2Fipfs%2FQmfB6dT5zxUq1BXiXisgcZKYkvjywdDYBK5keRaqDKH633) 
         if you don't want to have problems getting DAppNode packages.
 
 
