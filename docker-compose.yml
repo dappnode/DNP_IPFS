@@ -7,7 +7,7 @@ volumes:
   ipfsdnpdappnodeeth_export: {}
   ipfsdnpdappnodeeth_data: {}
 services:
-  ipfs.dnp.dappnode.eth:
+  ipfs:
     container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
     build:
       context: ./src
@@ -38,3 +38,4 @@ services:
       dncore_network:
         aliases:
           - ipfs.dappnode
+          - ipfs.ipfs.dappnode
