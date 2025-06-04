@@ -23,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/dappnode/DNP_IPFS/issues"
   },
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "warnings": {
+    "onMinorUpdate": "⚠️ IMPORTANT: After updating, you must delete the volumes associated with your IPFS package. The package has been upgraded from an older version that includes configuration changes. Removing the old volumes ensures the new configuration is applied correctly. New volumes will be created automatically."
+  }
 }
