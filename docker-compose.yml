@@ -10,7 +10,6 @@ services:
   ipfs.dnp.dappnode.eth:
     container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
     build:
-      context: ./src
       args:
         UPSTREAM_VERSION: v0.35.0
     image: ipfs.dnp.dappnode.eth:0.2.20
@@ -19,19 +18,10 @@ services:
       - ipfsdnpdappnodeeth_export:/export
       - ipfsdnpdappnodeeth_data:/data/ipfs
     ports:
-      - "4001:4001"
+      - 4001:4001
       - 4002:4002/udp
     environment:
-      - EXTRA_OPTS
-      - DATASTORE_STORAGEMAX=50GB
-      - PROFILE=custom
-      - ROUTING=dhtclient
-      - DISCOVERY_MDNS_ENABLED=true
-      - SWARM_DISABLENATPORTMAP=false
-      - REPROVIDER_INTERVAL=12h
-      - SWARM_CONNMGR_LOWWATER=600
-      - SWARM_CONNMGR_HIGHWATER=900
-      - SWARM_CONNMGR_GRACEPERIOD=20s
+      - IPFS_PROFILE=server
     security_opt:
       - seccomp:unconfined
     networks:
