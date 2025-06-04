@@ -51,10 +51,7 @@ else
 fi
 
 # IMPORTANT: this is a copy of the original entrypoint to add dappnode custom config to inject our gateways
-ipfs config --json Gateway.PublicGateways.ipfs.dappnode \
-  '{"NoDNSLink":false,"Paths":["/ipfs","/ipns"],"UseSubdomains":false}'
-ipfs config --json Gateway.PublicGateways.example.com \
-  '{"Paths":["/ipfs"]}'
+ipfs config --json Gateway.PublicGateways '{"ipfs.dappnode": { "NoDNSLink": false, "Paths": [ "/ipfs" , "/ipns" ], "UseSubdomains": true }}'
 
 find /container-init.d -maxdepth 1 -type f -iname '*.sh' -print0 | sort -z | xargs -n 1 -0 -r container_init_run
 
