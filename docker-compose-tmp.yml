@@ -1,0 +1,30 @@
+version: "3.5"
+networks:
+  dncore_network:
+    name: dncore_network
+    external: true
+volumes:
+  ipfsdnpdappnodeeth_export: {}
+  ipfsdnpdappnodeeth_data: {}
+services:
+  ipfs.dnp.dappnode.eth:
+    container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
+    build:
+      args:
+        UPSTREAM_VERSION: v0.35.0
+    image: ipfs.dnp.dappnode.eth:0.2.24
+    restart: unless-stopped
+    volumes:
+      - ipfsdnpdappnodeeth_export:/export
+      - ipfsdnpdappnodeeth_data:/data/ipfs
+    ports:
+      - "4001:4001"
+      - 4002:4002/udp
+    environment:
+      - IPFS_PROFILE=server
+    security_opt:
+      - seccomp:unconfined
+    networks:
+      dncore_network:
+        aliases:
+          - ipfs.dappnode
