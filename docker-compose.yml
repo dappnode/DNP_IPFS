@@ -10,6 +10,7 @@ services:
   ipfs.dnp.dappnode.eth:
     container_name: DAppNodeCore-ipfs.dnp.dappnode.eth
     build:
+      context: src
       args:
         UPSTREAM_VERSION: v0.35.0
     image: ipfs.dnp.dappnode.eth:0.2.20

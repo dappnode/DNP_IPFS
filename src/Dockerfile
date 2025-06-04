@@ -1,7 +1,7 @@
 ARG UPSTREAM_VERSION
 FROM ipfs/kubo:${UPSTREAM_VERSION}
 
-COPY src/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Override the default entrypoint to use our wrapper script
