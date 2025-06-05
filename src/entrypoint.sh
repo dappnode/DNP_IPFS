@@ -52,7 +52,7 @@ fi
 
 # IMPORTANT: this is a copy of the original entrypoint to add dappnode custom config to inject our gateways
 ipfs config --json Gateway.PublicGateways '{"ipfs.dappnode": { "NoDNSLink": false, "Paths": [ "/ipfs" , "/ipns" ], "UseSubdomains": false }}'
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["http://ipfs.dappnode:5001", "http://localhost:3000", "http://127.0.0.1:5001", "https://webui.ipfs.io"]'
+ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "POST", "GET]'
 
 find /container-init.d -maxdepth 1 -type f -iname '*.sh' -print0 | sort -z | xargs -n 1 -0 -r container_init_run
