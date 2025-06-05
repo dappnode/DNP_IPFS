@@ -4,6 +4,8 @@ set -e
 user=ipfs
 repo="$IPFS_PATH"
 
+echo "Starting IPFS entrypoint script"
+
 if [ "$(id -u)" -eq 0 ]; then
   echo "Changing user to $user"
   # ensure folder is writable
@@ -11,6 +13,8 @@ if [ "$(id -u)" -eq 0 ]; then
   # restart script with new privileges
   exec gosu "$user" "$0" "$@"
 fi
+
+echo "Running as user: $(id -un)"
 
 # 2nd invocation with regular user
 ipfs version
@@ -51,7 +55,9 @@ fi
 
 # IMPORTANT: this is a copy of the original entrypoint to add dappnode custom config to inject our gateways
 # In order to be able to execute config commands, the fs-repo-migrations must be run first
-fs-repo-migrations 
+echo "Running fs-repo-migrations"
+/usr/local/bin/fs-repo-migrations 
+echo "Running IPFS config commands"
 ipfs config --json Gateway.PublicGateways '{"ipfs.dappnode": { "NoDNSLink": false, "Paths": [ "/ipfs" , "/ipns" ], "UseSubdomains": false }}'
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "POST", "GET]'
