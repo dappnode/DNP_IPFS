@@ -15,7 +15,6 @@ fi
 # 2nd invocation with regular user
 ipfs version
 
-
 if [ -e "$repo/config" ]; then
   echo "Found IPFS fs-repo at $repo"
 else
@@ -51,6 +50,8 @@ else
 fi
 
 # IMPORTANT: this is a copy of the original entrypoint to add dappnode custom config to inject our gateways
+# In order to be able to execute config commands, the fs-repo-migrations must be run first
+fs-repo-migrations 
 ipfs config --json Gateway.PublicGateways '{"ipfs.dappnode": { "NoDNSLink": false, "Paths": [ "/ipfs" , "/ipns" ], "UseSubdomains": false }}'
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
 ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "POST", "GET]'
