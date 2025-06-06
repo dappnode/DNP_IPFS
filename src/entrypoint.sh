@@ -65,6 +65,8 @@ ipfs config --json Gateway.PublicGateways '{"ipfs.dappnode": { "NoDNSLink": fals
 ipfs bootstrap add /ip4/65.109.51.31/tcp/4001/p2p/12D3KooWLdrSru7LzYY4YDcfnJsrJeshTQooR2j38NkGvoj2yADp
 # Add to bootstrap list the dev Dappnode IPFS gateway 
 ipfs bootstrap add /ip4/167.86.114.131/tcp/4001/p2p/12D3KooWCAx5zWejUDotqc7dcvpvNstM9eZRdtdne1oXZ1DpdLFb
+# list bootstrap peers
+ipfs bootstrap list
 
 find /container-init.d -maxdepth 1 -type f -iname '*.sh' -print0 | sort -z | xargs -n 1 -0 -r container_init_run
 
