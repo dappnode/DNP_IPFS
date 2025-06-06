@@ -10,8 +10,10 @@ RUN ARCH=$(uname -m) && \
     elif [ "$ARCH" = "aarch64" ]; then \
         ARCH="arm64"; \
     else \
-        echo "Unsupported architecture: $ARCH" && exit 1; \
+        echo "WARN: Unsupported architecture: $ARCH, falling back to amd64..." && \
+        ARCH="amd64"; \
     fi && \
+    echo "Using architecture: $ARCH" && \
     wget https://dist.ipfs.tech/fs-repo-migrations/v2.0.2/fs-repo-migrations_v2.0.2_linux-$ARCH.tar.gz && \
     tar -xvf fs-repo-migrations_v2.0.2_linux-$ARCH.tar.gz && \
     mv fs-repo-migrations/fs-repo-migrations /usr/local/bin/ && \
