@@ -1,0 +1,10 @@
+[
+  {
+    "labels": {
+      "package": "ipfs.dnp.dappnode.eth",
+      "service": "ipfs.dnp.dappnode.eth",
+      "__metrics_path__": "/debug/metrics/prometheus"
+    },
+    "targets": ["ipfs.dappnode:5001"]
+  }
+]
