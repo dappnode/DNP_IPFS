@@ -22,9 +22,13 @@ ipfs version
 if [ -e "$repo/config" ]; then
   echo "Found IPFS fs-repo at $repo"
 else
+  # Set Config options before starting the daemon
   ipfs init ${IPFS_PROFILE:+"--profile=$IPFS_PROFILE"}
   ipfs config Addresses.API /ip4/0.0.0.0/tcp/5001
   ipfs config Addresses.Gateway /ip4/0.0.0.0/tcp/8080
+  ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin '["*"]'
+  ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods '["PUT", "GET", "POST"]'
+  ipfs config --json Gateway.PublicGateways "{\"ipfs.dappnode\": { \"NoDNSLink\": false, \"Paths\": [ \"/ipfs\" , \"/ipns\" ], \"UseSubdomains\": false }}"
 
   # Set up the swarm key, if provided
 
