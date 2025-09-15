@@ -5,9 +5,6 @@ echo "Starting IPFS post-config script..."
 
 # List of config commands, one per line
 CONFIG_COMMANDS='
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Origin "[\"*\"]"
-ipfs config --json API.HTTPHeaders.Access-Control-Allow-Methods "[\"PUT\", \"GET\", \"POST\"]"
-ipfs config --json Gateway.PublicGateways "{\"ipfs.dappnode\": { \"NoDNSLink\": false, \"Paths\": [ \"/ipfs\" , \"/ipns\" ], \"UseSubdomains\": false }}"
 ipfs bootstrap add /ip4/65.109.51.31/tcp/4001/p2p/12D3KooWLdrSru7LzYY4YDcfnJsrJeshTQooR2j38NkGvoj2yADp
 ipfs bootstrap add /ip4/167.86.114.131/tcp/4001/p2p/12D3KooWCAx5zWejUDotqc7dcvpvNstM9eZRdtdne1oXZ1DpdLFb
 ipfs swarm connect /ip4/65.109.51.31/tcp/4001/p2p/12D3KooWLdrSru7LzYY4YDcfnJsrJeshTQooR2j38NkGvoj2yADp
