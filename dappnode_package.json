@@ -1,27 +1,33 @@
 {
-  "name": "ipfs.dnp.dappnode.eth",
-  "version": "0.2.28",
-  "upstreamVersion": "v0.39.0",
-  "description": "Dappnode package responsible for providing IPFS connectivity",
-  "type": "dncore",
-  "architectures": ["linux/amd64", "linux/arm64"],
+  "architectures": [
+    "linux/amd64",
+    "linux/arm64"
+  ],
   "author": "DAppNode Association <admin@dappnode.io> (https://github.com/dappnode)",
+  "bugs": {
+    "url": "https://github.com/dappnode/DNP_IPFS/issues"
+  },
   "contributors": [
     "Eduardo Antuña <eduadiez@gmail.com> (https://github.com/eduadiez)"
   ],
-  "upstreamRepo": "ipfs/kubo",
-  "upstreamArg": "UPSTREAM_VERSION",
-  "keywords": ["DAppNodeCore", "IPFS"],
+  "description": "Dappnode package responsible for providing IPFS connectivity",
+  "keywords": [
+    "DAppNodeCore",
+    "IPFS"
+  ],
+  "license": "GPL-3.0",
   "links": {
-    "webui": "http://ipfs.dappnode:5001/webui",
-    "homepage": "https://github.com/dappnode/DNP_IPFS#readme"
+    "homepage": "https://github.com/dappnode/DNP_IPFS#readme",
+    "webui": "http://ipfs.dappnode:5001/webui"
   },
+  "name": "ipfs.dnp.dappnode.eth",
   "repository": {
     "type": "git",
     "url": "https://github.com/dappnode/DNP_IPFS"
   },
-  "bugs": {
-    "url": "https://github.com/dappnode/DNP_IPFS/issues"
-  },
-  "license": "GPL-3.0"
+  "type": "dncore",
+  "upstreamArg": "UPSTREAM_VERSION",
+  "upstreamRepo": "ipfs/kubo",
+  "upstreamVersion": "v0.43.0",
+  "version": "0.2.28"
 }
