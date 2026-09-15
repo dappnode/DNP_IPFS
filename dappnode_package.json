@@ -28,6 +28,6 @@
   "type": "dncore",
   "upstreamArg": "UPSTREAM_VERSION",
   "upstreamRepo": "ipfs/kubo",
-  "upstreamVersion": "v0.43.0",
+  "upstreamVersion": "v0.43.1",
   "version": "0.2.28"
 }
