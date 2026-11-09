@@ -26,8 +26,12 @@
     "url": "https://github.com/dappnode/DNP_IPFS"
   },
   "type": "dncore",
-  "upstreamArg": "UPSTREAM_VERSION",
-  "upstreamRepo": "ipfs/kubo",
-  "upstreamVersion": "v0.43.1",
+  "upstream": [
+    {
+      "repo": "ipfs/kubo",
+      "version": "v0.43.1",
+      "arg": "UPSTREAM_VERSION"
+    }
+  ],
   "version": "0.2.28"
 }
